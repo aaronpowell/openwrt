@@ -17,7 +17,6 @@ PKG_MD5SUM:=7e7321fb3aff2f2bb05c8229f3795d4a
 
 PKG_MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
 
-PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1
 PKG_LICENSE:=BSD-3-Clause
 
@@ -84,15 +83,16 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
-	$(CP) $(PKG_INSTALL_DIR)/usr/include/pcap* $(1)/usr/include/
+	$(CP) $(PKG_BUILD_DIR)/pcap*.h $(1)/usr/include/
+	$(CP) $(PKG_BUILD_DIR)/pcap $(1)/usr/include/
 
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libpcap.{a,so*} $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/libpcap.{a,so*} $(1)/usr/lib/
 endef
 
 define Package/libpcap/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libpcap.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/libpcap.so* $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,libpcap))
